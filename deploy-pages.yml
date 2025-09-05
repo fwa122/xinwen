@@ -1,0 +1,42 @@
+name: Deploy to GitHub Pages
+
+on:
+  # 当爬虫工作流完成后触发部署
+  workflow_run:
+    workflows: ["新闻爬虫自动化"]
+    types: [completed]
+  # 也允许手动触发
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Create latest news data symlink
+      run: |
+        # 找到最新的新闻数据文件并创建软链接
+        latest_file=$(ls news_data/综合_*.json | sort -Vr | head -n 1)
+        cp "$latest_file" news_data/综合_latest.json
+        echo "Created latest file from: $latest_file"
+      
+    - name: Setup Pages
+      uses: actions/configure-pages@v3
+      
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v2
+      with:
+        path: '.'
+        
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v2

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新闻聚合平台 - 自动采集各大媒体资讯</title>
+    <link rel="stylesheet" href="./styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">新闻聚合平台</h1>
+            <p class="subtitle">GitHub Actions 自动采集最新资讯</p>
+            <p class="update-time">最后更新: <span id="updateTime">加载中...</span></p>
+        </div>
+    </header>
+
+    <nav class="navigation">
+        <div class="container">
+            <ul class="nav-list" id="categoryNav">
+                <li><a href="#all" class="nav-link active">全部</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="stats-bar">
+                <span>总新闻数: <span id="totalNews">0</span></span>
+                <button id="refreshBtn" class="refresh-btn">
+                    <i class="fas fa-sync-alt"></i> 刷新数据
+                </button>
+            </div>
+
+            <div id="newsContainer" class="news-container">
+                <div class="loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>正在加载新闻数据...</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 新闻聚合平台. 数据来源于各大正规新闻媒体网站.</p>
+            <p>Powered by GitHub Actions</p>
+        </div>
+    </footer>
+
+    <script src="./script.js"></script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+[
+  {
+    "title": "示例新闻标题1",
+    "url": "https://example.com/news/1",
+    "source": "示例来源",
+    "category": "综合",
+    "timestamp": 1756987545,
+    "date": "2025-09-04 20:05:45",
+    "id": "sample_1"
+  },
+  {
+    "title": "示例新闻标题2",
+    "url": "https://example.com/news/2",
+    "source": "示例来源",
+    "category": "综合",
+    "timestamp": 1756987546,
+    "date": "2025-09-04 20:05:46",
+    "id": "sample_2"
+  }
+]

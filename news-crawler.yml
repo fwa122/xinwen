@@ -1,0 +1,55 @@
+name: 新闻爬虫自动化
+
+on:
+  # 定时任务：每小时运行一次（UTC时间）
+  schedule:
+    - cron: '0 * * * *'
+  # 允许手动触发
+  workflow_dispatch:
+  # 推送代码到main分支时触发
+  push:
+    branches: [ main ]
+
+jobs:
+  crawl-news:
+    runs-on: ubuntu-latest
+    
+    steps:
+    # 1. 检出代码
+    - name: 检出代码
+      uses: actions/checkout@v4
+      with:
+        # 获取所有历史记录，确保能正确提交更改
+        fetch-depth: 0
+        
+    # 2. 设置Python环境
+    - name: 设置Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12.8'
+        
+    # 3. 安装依赖
+    - name: 安装依赖包
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        
+    # 4. 运行新闻爬虫
+    - name: 运行爬虫程序
+      run: python modern_news_crawler.py --crawl-only
+      
+    # 5. 提交更新的数据文件
+    - name: 提交数据更新
+      run: |
+        # 配置Git用户信息
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        
+        # 添加所有更改的文件
+        git add .
+        
+        # 提交更改，如果没有更改则跳过
+        git diff --cached --quiet || git commit -m "自动更新新闻数据 [skip ci]"
+        
+        # 推送更改到仓库
+        git push
